@@ -9,8 +9,9 @@ struct Point
 };
 
 Point pc = {4,5};   // Spawn point for player controlled sprite
+int direction = 0;
 
-void setup() {
+void setup() 
 {  
    MeggyJrSimpleSetup();      // Required code, line 2 of 2.
 }
@@ -21,6 +22,30 @@ void loop()
   DisplaySlate();
   ClearSlate();
 }
+
+void pcMovement()
+{
+  CheckButtonsDown();
+  {
+    if (Button_Up) 
+    {
+      direction = 360;
+    }
+    if (Button_Right) 
+    {
+      direction = 90;
+    }
+    if (Button_Down) 
+    {
+      direction = 180;
+    }
+    if (Button_Left) 
+    {
+    direction = 270;
+    }
+  }  
+} 
+
 
 
   
