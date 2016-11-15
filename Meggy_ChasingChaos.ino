@@ -14,14 +14,16 @@ struct Enemy
   int y;
 };
 
-Enemy e1 = {0,0}
-Enemy e2 = {0,0}
-Enemy e3 = {0,0}
+Enemy e1 = {0,0};
+Enemy e2 = {0,0};
+Enemy e3 = {0,0};
 Enemy enemies[3] = {e1,e2,e3};
 
-Point pc = {4,5};   // Spawn point for player controlled sprite
-int px = 0
-int py = 0
+int direction = 0;
+
+  // Spawn point for player controlled sprite
+int pcx = 4;
+int pcy = 5;
 
 void setup() 
 {  
@@ -30,35 +32,83 @@ void setup()
 }
 
 void loop() 
-{              // says function definition is not allowed here before '{' token
-  Serial.print("functioncalled");
-  DrawPx(pc.x,pc.y,Green);    // Draw player's dot in green
+{             
+  DrawPx(pcx,pcy,Green);    // Draw player's dot in green
   DisplaySlate();
   ClearSlate();
+}
+
+boolean checkDupe (int x, int y)
+{
+  for(int i = 0; i < 3; i++)
+  {
+    if (x == enemies[i].x)
+    {
+      if(y == enemies[i].y)
+        return true;
+    }
+  }
+  return false;
+}
+
+void spawn (int index)
+{
+  // generate a random x
+  // generate a random y
+  int x;
+  int y;
+  do
+  {
+    x = random(8);
+    y = random(8);
+  }
+  while(checkDupe(x,y) == true);
+  enemies[index].x = x;
+  enemies[index].y = y;
+}
+
+void drawEnemies()
+{
+  for(int i = 0; i < 3; i++)
+  {
+    DrawPx(enemies[i].x, enemies[i].y, Red);
+  }
 }
 
 void pcMovement()
 {
   CheckButtonsDown();
-  {
-    if (Button_Up) 
     {
-      direction = 360;
+      if (Button_Up && pcy < 7)
+      {
+        pcy++;
+      }
     }
-    if (Button_Right) 
-    {
-      direction = 90;
+    
+    {  
+      if (Button_Left && pcx > 0)
+      {
+        pcx--;
+      }
     }
-    if (Button_Down) 
-    {
-      direction = 180;
+    
+    {    
+      if (Button_Down && pcy > 0)
+      {
+        pcy--;
+      }
     }
-    if (Button_Left) 
-    {
-    direction = 270;
+    
+    {  
+      if (Button_Right && pcx < 7)
+      {
+        pcx++;
+      }    
     }
-  }  
-} 
+}
+ 
+
+
 
 
 
