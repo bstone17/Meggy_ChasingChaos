@@ -14,16 +14,15 @@ struct Enemy
   int y;
 };
 
-Enemy e1 = {0,0};
-Enemy e2 = {0,0};
-Enemy e3 = {0,0};
+Enemy e1 = {random(8), random(8)};
+Enemy e2 = {random(8), random(8)};
+Enemy e3 = {random(8), random(8)};
 Enemy enemies[3] = {e1,e2,e3};
 
-int direction = 0;
 
-  // Spawn point for player controlled sprite
 int pcx = 4;
 int pcy = 5;
+
 
 void setup() 
 {  
@@ -33,7 +32,9 @@ void setup()
 
 void loop() 
 {             
-  DrawPx(pcx,pcy,Green);    // Draw player's dot in green
+  pcMovement();   
+  spawn;
+  drawEnemies();
   DisplaySlate();
   ClearSlate();
 }
@@ -67,6 +68,7 @@ void spawn (int index)
   enemies[index].y = y;
 }
 
+
 void drawEnemies()
 {
   for(int i = 0; i < 3; i++)
@@ -77,7 +79,7 @@ void drawEnemies()
 
 void pcMovement()
 {
-  CheckButtonsDown();
+  CheckButtonsPress();
     {
       if (Button_Up && pcy < 7)
       {
@@ -105,7 +107,13 @@ void pcMovement()
         pcx++;
       }    
     }
+    {
+      DrawPx(pcx,pcy,Green);  // Spawning of player controlled sprite
+
+    }
 }
+
+
  
 
 
