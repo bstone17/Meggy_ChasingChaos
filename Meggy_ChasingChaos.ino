@@ -84,6 +84,8 @@ void pcMovement()
       if (Button_Up && pcy < 7)
       {
         pcy++;
+        yenemyMovement();
+        xenemyMovement();
       }
     }
     
@@ -91,6 +93,8 @@ void pcMovement()
       if (Button_Left && pcx > 0)
       {
         pcx--;
+        yenemyMovement();
+        xenemyMovement();
       }
     }
     
@@ -98,6 +102,8 @@ void pcMovement()
       if (Button_Down && pcy > 0)
       {
         pcy--;
+        yenemyMovement();
+        xenemyMovement();
       }
     }
     
@@ -105,13 +111,47 @@ void pcMovement()
       if (Button_Right && pcx < 7)
       {
         pcx++;
+        yenemyMovement();
+        xenemyMovement();
       }    
     }
     {
       DrawPx(pcx,pcy,Green);  // Spawning of player controlled sprite
-
     }
 }
+
+void xenemyMovement()
+{
+  for(int i = 0; i < 3; i++)
+  {
+    if (enemies[i].x > pcx)
+    {
+      enemies[i].x--;  
+    }
+    if (enemies[i].x < pcx)
+    {
+      enemies[i].x++;
+    }
+  }
+}
+
+void yenemyMovement()
+{
+  for(int i = 0; i < 3; i++)
+  {
+    if (enemies[i].y > pcy)
+    {
+      enemies[i].y--;
+    }
+    if (enemies[i].y < pcy)   
+    {
+      enemies[i].y++;
+    }
+  }
+}
+
+  
+
 
 
  
