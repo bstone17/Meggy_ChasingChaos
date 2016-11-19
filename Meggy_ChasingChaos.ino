@@ -12,11 +12,12 @@ struct Enemy
 {
   int x;
   int y;
+  boolean dead;
 };
 
-Enemy e1 = {random(8), random(8)};
-Enemy e2 = {random(8), random(8)};
-Enemy e3 = {random(8), random(8)};
+Enemy e1 = {random(8), random(8), false};
+Enemy e2 = {random(8), random(8), false};
+Enemy e3 = {random(8), random(8), false};
 Enemy enemies[3] = {e1,e2,e3};
 
 
@@ -73,7 +74,10 @@ void drawEnemies()
 {
   for(int i = 0; i < 3; i++)
   {
-    DrawPx(enemies[i].x, enemies[i].y, Red);
+    if (enemies[i].dead == false)
+    {
+      DrawPx(enemies[i].x, enemies[i].y, Red);
+    }
   }
 }
 
@@ -162,6 +166,24 @@ void yenemyMovement()
     if (enemies[i].y < pcy)   
     {
       enemies[i].y++;
+    }
+  }
+}
+
+void enemyCollision()
+{
+  for (int i = 0; i < 3; i++)
+  {
+    for(int j = 0; j < 3; j++)
+    {
+      if (i!=j)
+      {
+        if (enemies[i].x == enemies[j].x && enemies[i].y == enemies[j].y)
+        {
+          enemies[i].dead = true;
+          enemies[j].dead = true; 
+        }
+      }
     }
   }
 }
