@@ -81,39 +81,55 @@ void pcMovement()
 {
   CheckButtonsPress();
     {
-      if (Button_Up && pcy < 7)
+      if (Button_Up)
       {
         pcy++;
         yenemyMovement();
         xenemyMovement();
       }
+      if (pcy > 7)
+      {
+        pcy = 0;
+      }
     }
     
     {  
-      if (Button_Left && pcx > 0)
+      if (Button_Left)
       {
         pcx--;
         yenemyMovement();
         xenemyMovement();
       }
+      if (pcx < 0)
+      {
+        pcx = 7;
+      }
     }
     
     {    
-      if (Button_Down && pcy > 0)
+      if (Button_Down)
       {
         pcy--;
         yenemyMovement();
         xenemyMovement();
       }
+      if (pcy < 0)
+      {
+        pcy = 7;
+      }
     }
     
     {  
-      if (Button_Right && pcx < 7)
+      if (Button_Right)
       {
         pcx++;
         yenemyMovement();
         xenemyMovement();
-      }    
+      }
+      if (pcx > 7)
+      {
+        pcx = 0;    
+      }
     }
     {
       DrawPx(pcx,pcy,Green);  // Spawning of player controlled sprite
