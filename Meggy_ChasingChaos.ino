@@ -18,7 +18,11 @@ struct Enemy
 Enemy e1 = {random(8), random(8), false};
 Enemy e2 = {random(8), random(8), false};
 Enemy e3 = {random(8), random(8), false};
-Enemy enemies[3] = {e1,e2,e3};
+Enemy e4 = {random(8), random(8), false};
+Enemy e5 = {random(8), random(8), false};
+
+
+Enemy enemies[5] = {e1,e2,e3,e4,e5};
 
 
 int pcx = 4;
@@ -36,13 +40,15 @@ void loop()
   pcMovement();   
   spawn;
   drawEnemies();
+  enemyCollision();
+  playerCollision();
   DisplaySlate();
   ClearSlate();
 }
 
 boolean checkDupe (int x, int y)
 {
-  for(int i = 0; i < 3; i++)
+  for(int i = 0; i < 5; i++)
   {
     if (x == enemies[i].x)
     {
@@ -72,11 +78,15 @@ void spawn (int index)
 
 void drawEnemies()
 {
-  for(int i = 0; i < 3; i++)
+  for(int i = 0; i < 5; i++)
   {
     if (enemies[i].dead == false)
     {
       DrawPx(enemies[i].x, enemies[i].y, Red);
+    }
+    if (enemies[i].dead == true)
+    {
+      DrawPx(enemies[i].x, enemies[i].y, Blue);
     }
   }
 }
@@ -142,39 +152,45 @@ void pcMovement()
 
 void xenemyMovement()
 {
-  for(int i = 0; i < 3; i++)
+  for(int i = 0; i < 5; i++)
   {
-    if (enemies[i].x > pcx)
+    if (enemies[i].dead == false)
     {
-      enemies[i].x--;  
-    }
-    if (enemies[i].x < pcx)
-    {
-      enemies[i].x++;
+      if (enemies[i].x > pcx)
+      {
+        enemies[i].x--;  
+      }
+      if (enemies[i].x < pcx)
+      {
+        enemies[i].x++;
+      }
     }
   }
 }
 
 void yenemyMovement()
 {
-  for(int i = 0; i < 3; i++)
+  for(int i = 0; i < 5; i++)
   {
-    if (enemies[i].y > pcy)
+    if (enemies[i].dead == false)
     {
-      enemies[i].y--;
-    }
-    if (enemies[i].y < pcy)   
-    {
-      enemies[i].y++;
-    }
+      if (enemies[i].y > pcy)
+      {
+        enemies[i].y--;
+      }
+      if (enemies[i].y < pcy)   
+      {
+        enemies[i].y++;
+      }
+    }  
   }
 }
 
 void enemyCollision()
 {
-  for (int i = 0; i < 3; i++)
+  for (int i = 0; i < 5; i++)
   {
-    for(int j = 0; j < 3; j++)
+    for(int j = 0; j < 5; j++)
     {
       if (i!=j)
       {
@@ -184,6 +200,28 @@ void enemyCollision()
           enemies[j].dead = true; 
         }
       }
+    }
+  }
+}
+
+void playerCollision()
+{
+  for (int i = 0; i < 5; i++)
+  {
+    if (pcx == enemies[i].x && pcy == enemies[i].y)
+    {
+      DrawPx(3,7, Orange);
+      DrawPx(3,6, Orange);
+      DrawPx(3,5, Orange);
+      DrawPx(3,4, Orange);
+      DrawPx(3,3, Orange);
+      DrawPx(3,2, Orange);
+      DrawPx(3,1, Orange);
+      DrawPx(3,0, Orange);
+      DrawPx(4,0, Orange);
+      DrawPx(5,0, Orange);
+      DrawPx(6,0, Orange);
+      DrawPx(7,0, Orange);
     }
   }
 }
